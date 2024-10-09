@@ -1,3 +1,3 @@
-# RISIKO Missions
+# BLUEPRINTS
 
-AI-generated missions for the boardgame RISIKO.
+AI-generated list templates.
