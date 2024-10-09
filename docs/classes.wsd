@@ -1,0 +1,64 @@
+@startuml
+User -- Template : creates >
+User -- Account : contains >
+Template -- Model : generates <
+
+class User {
+ id: UUID
+ name: String
+ account: Account
+}
+
+class Account <<subresource>> {
+ id: UUID
+ userId: String
+ avatar: String
+ email: String
+}
+
+class Template {
+ id: UUID
+ userId: String
+ modelId: String
+ name: String
+ task: String
+ list: ListItem[]
+ created: Date
+ deleted: Date
+}
+
+class Model {
+ id: UUID
+ name: String
+ model: String
+ type: ModelType
+ instruction: String
+ top_p: Float
+ temperature: Float
+ response_format: String
+}
+
+class Opeartion {
+ id: UUID
+ templateId: String
+ result: String
+ metadata: String
+ done: Boolean
+}
+
+interface ListItem {
+ state: ItemState
+ text: String
+ note: String
+}
+
+enum ModelType {
+  INSTRUCTIONS
+  QUESTIONS
+}
+
+enum ItemState {
+  CHECKED
+  UNCHECKED
+}
+@enduml
