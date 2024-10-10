@@ -30,13 +30,18 @@ helm install [...]
 
 ## Backend
 
-1. Create a virtual environment ([Docs](https://fastapi.tiangolo.com/virtual-environments/#create-a-virtual-environment))
-2. Install FastAPI and save it via `uv pip freeze > requirements.txt`
+1. Manage environment and dependencies via [uv](https://github.com/astral-sh/uv). Create project via `uv init <project-name>`
+2. Create virtual environment via `uv venv` and activate it via `source .venv/bin/activate` ([Docs](https://fastapi.tiangolo.com/virtual-environments/#create-a-virtual-environment))
 
-* FastAPI (REST)
+* ...
+* ruff (Linter)
+* FastAPI (REST) `uv add fastapi --extra standard`
 * LangChain (PrompChain)
 * OpenAI API to generate Missions (GPT4)
 
 ## Frontend
 
+1. Init project via `npm create vite@latest` and choose `react` as framework
+
+* Vite (vite)
 * React
