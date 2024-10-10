@@ -3,9 +3,6 @@ FROM python:3.11
 # Run pyhton in non buffered mode (docker best practice)
 ENV PYTHONUNBUFFERED=1
 
-# Change the working directory to the `app` directory
-WORKDIR /app/
-
 # Install uv
 # Ref: https://docs.astral.sh/uv/guides/integration/docker/#installing-uv
 COPY --from=ghcr.io/astral-sh/uv:0.4.20 /uv /bin/uv
@@ -38,6 +35,7 @@ COPY ./app /app/app
 
 # Sync the project
 # Ref: https://docs.astral.sh/uv/guides/integration/docker/#intermediate-layers
+WORKDIR /app
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync
 
