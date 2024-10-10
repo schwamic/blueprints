@@ -32,7 +32,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 # Tell python interpreter where to look for modules and packages
 ENV PYTHONPATH=/app
 
-COPY ./scripts /app/scripts
+# COPY ./scripts /app/scripts
 COPY ./pyproject.toml ./uv.lock /app/
 COPY ./app /app/app
 
