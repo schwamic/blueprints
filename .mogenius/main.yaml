@@ -1,7 +1,7 @@
 serviceType: Deployment
 displayName: BACKEND
-dockerfileName: backend/Dockerfile
-dockerContext: .
+dockerfileName: ./backend/Dockerfile
+dockerContext: ./backend
 k8sSettings:
   limitCpuCores: 1
   limitMemoryMB: 512
@@ -11,5 +11,9 @@ k8sSettings:
   imagePullPolicy: IfNotPresent
   probesOn: false
 envVars: []
-ports: []
+ports:
+  - portType: HTTPS
+    internalPort: 80
+    externalPort: 80
+    expose: true
 
