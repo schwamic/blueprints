@@ -38,7 +38,8 @@ helm install [...]
 ### Development
 
 1. Run Docker `docker compose up --build --remove-orphans` for local development
-2. Run tests via `TODO`
+2. Run tests via `docker compose run fastapi pytest` (fastapi = service name in docker-compose.yaml)
+3. Dec Containers (VS Code) https://www.youtube.com/watch?v=0H2miBK_gAk
 
 * ...
 * ruff (Linter)
