@@ -1,7 +1,8 @@
 @startuml
-User "1" -- "*" Template : creates >
+User "1" -- "*" ListTemplate : creates >
+User "1" -- "*" Reminder : creates >
 User *-- UserAccount : contains >
-Template "*" -- "1" Model : generates <
+ListTemplate "*" -- "1" Model : generates <
 
 class User {
  id: UUID
@@ -16,7 +17,7 @@ class UserAccount <<subresource>> {
  email: String
 }
 
-class Template {
+class ListTemplate {
  id: UUID
  userId: String
  modelId: String
@@ -39,6 +40,13 @@ class Model {
  response_format: String
 }
 
+
+class Reminder {
+ id: UUID
+ task: TaskT
+ interval: ReminderInterval
+}
+
 class Operation {
  id: UUID
  done: Boolean
@@ -50,6 +58,14 @@ interface CheckListItem <<interface>> {
  checked: Boolean
  text: String
  note: String
+}
+
+enum ReminderInterval <<enumeration>> {
+ DAY
+ WEEK
+ BIWEEK
+ MONTH
+ YEAR
 }
 
 enum Subscription <<enumeration>> {
