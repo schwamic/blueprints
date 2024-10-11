@@ -30,8 +30,15 @@ helm install [...]
 
 ## Backend
 
+### Setup
+
 1. Manage environment and dependencies via [uv](https://github.com/astral-sh/uv). Create project via `uv init <project-name>`
 2. Create virtual environment via `uv venv` and activate it via `source .venv/bin/activate` ([Docs](https://fastapi.tiangolo.com/virtual-environments/#create-a-virtual-environment))
+
+### Development
+
+1. Run Docker `docker compose up --build --remove-orphans` for local development
+2. Run tests via `TODO`
 
 * ...
 * ruff (Linter)
