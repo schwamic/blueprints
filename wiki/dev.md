@@ -37,9 +37,15 @@ helm install [...]
 
 ### Development
 
-1. Run Docker `docker compose up --build --remove-orphans` for local development
-2. Run tests via `docker compose run fastapi pytest` (fastapi = service name in docker-compose.yaml)
-3. Dec Containers (VS Code) https://www.youtube.com/watch?v=0H2miBK_gAk
+- [VS Code Workspaces](https://code.visualstudio.com/docs/editor/workspaces)
+- [VS Code Dev Containers](https://www.youtube.com/watch?v=dihfA7Ol6Mw)
+
+1. Reopen `/backend` in container. Only once: +Connect to blueprints repository, +Install extension in vs-code
+2. Run `$ source .venv/bin/activate`
+3. Run `uv sync`
+4. Run Docker `docker compose up --build --remove-orphans` to start server
+5. Run tests via `uv tool run pytest` or just `pytest app/tests/` ([Docs](https://docs.pytest.org/en/stable/how-to/usage.html))
+6. Run linter via `ruff check app/` ([Docs](https://docs.astral.sh/ruff/linter/))
 
 * ...
 * ruff (Linter)
