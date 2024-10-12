@@ -1,3 +1,3 @@
 # BLUEPRINTS
 
-AI-generated list templates.
+Playground for project ideas.
