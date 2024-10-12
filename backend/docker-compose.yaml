@@ -16,10 +16,10 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - ./backend/.volumes/blueprintsdatabase/data:/var/lib/postgresql/data
+      - .volumes/blueprintsdatabase/data:/var/lib/postgresql/data
 
   fastapi:
-    build: ./backend/
+    build: .
     hostname: blueprints
     container_name: blueprintsbackend
     command: fastapi dev app/main.py --host 0.0.0.0 --port 8001
@@ -29,7 +29,7 @@ services:
       postgres:
         condition: service_healthy
     volumes:
-      - ./backend/app:/app/app
+      - ./app:/app/app
 
 networks:
   default:
