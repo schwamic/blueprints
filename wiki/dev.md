@@ -28,6 +28,8 @@ helm install [...]
 
 ## Backend
 
+* Code Style: https://peps.python.org/pep-0008/#naming-conventions
+
 ### Setup
 
 1. Manage environment and dependencies via [uv](https://github.com/astral-sh/uv). Create project via `uv init <project-name>`
