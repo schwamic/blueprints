@@ -16,3 +16,7 @@ dependencies = [
     "sqlmodel>=0.0.22",
     "starlette>=0.38.6",
 ]
+[tool.pytest.ini_options]
+pythonpath = [
+  "."
+]

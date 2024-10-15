@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from app.users.controllers import users_controller
+from app.health.controllers import health_controller
 from app.common.core.settings import settings
 from starlette.middleware.cors import CORSMiddleware
 
@@ -16,4 +17,5 @@ app.add_middleware(
     allow_headers=settings.CORS.allow_headers,
 )
 
+app.include_router(health_controller.router)
 app.include_router(users_controller.router)
