@@ -12,7 +12,8 @@
 		"vscode": {
 			"extensions": [
 				"ms-python.python",
-				"ms-vscode-remote.vscode-remote-extensionpack"
+				"ms-vscode-remote.vscode-remote-extensionpack",
+				"be5invis.toml"
 			]
 		}
 	}

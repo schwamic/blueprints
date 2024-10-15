@@ -1,4 +1,5 @@
 from sqlmodel import SQLModel, Field
+from pydantic import AnyUrl
 import uuid
 
 class UserBase(SQLModel):
@@ -10,3 +11,4 @@ class User(UserBase, table=True):
 
 class UserPublic(UserBase):
     id: uuid.UUID
+    avatar: AnyUrl

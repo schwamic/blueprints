@@ -7,11 +7,11 @@ services:
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: developer
-      POSTGRES_PASSWORD: development
-      POSTGRES_DB: development
+      POSTGRES_USER: ${BP_POSTGRES__USER}
+      POSTGRES_PASSWORD: ${BP_POSTGRES__PASSWORD}
+      POSTGRES_DB: ${BP_POSTGRES__DB}
     healthcheck:
-      test: [ "CMD", "pg_isready", "-d", "development", "-U", "developer"]
+      test: [ "CMD", "pg_isready", "-d", "$BP_POSTGRES__DB", "-U", "$BP_POSTGRES__USER"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -20,6 +20,7 @@ services:
 
   fastapi:
     build: .
+    env_file: ".env"
     hostname: blueprints
     container_name: blueprintsbackend
     command: fastapi dev app/main.py --host 0.0.0.0 --port 8001

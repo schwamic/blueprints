@@ -11,9 +11,9 @@ This project was bootstrap via `uv` and uses the framework `fastapi`.
 |- BackgroundTasks
 |- (...)
 - Module
-|- Controller
-|- Service
-|- Entity
+|- Controllers
+|- Models
+|- Services
 |- (Dto, ...)
 ```
 

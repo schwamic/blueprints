@@ -1,17 +1,18 @@
-from fastapi import APIRouter, HTTPException
-from ..models.users_model import User
+from fastapi import APIRouter, HTTPException, Query
+from ..models.users_model import UserPublic
+from ..models.users_account_model import UserAccountPublic
 
 router = APIRouter(
     prefix="/users",
     tags=["users"],
 )
 
-@router.get("/{userId}", response_model=User)
+@router.get("/{userId}", response_model=UserPublic)
 async def get_user(userId: str):
     raise {"message": "TODO: Get user"}
 
-@router.get("/")
-async def list_users():
+@router.get("/", response_model=list[UserPublic])
+async def list_users(offset: int = 0, limit: int = Query(default=100, le=100)):
     raise HTTPException(status_code=405, detail="Method Not Allowed")
 
 @router.post("/")
@@ -20,18 +21,18 @@ async def create_user():
 
 @router.patch("/{userId}")
 async def update_user(userId: str):
-    raise HTTPException(status_code=405, detail="Method Not Allowed")
+    return {"message": "TODO: Update user"}
 
 @router.delete("/{userId}")
 async def delete_user(userId: str):
-    raise HTTPException(status_code=405, detail="Method Not Allowed")
+    return {"message": "TODO: Delete user"}
 
 @router.put("/{userId}")
 async def replace_user(userId: str):
     raise HTTPException(status_code=405, detail="Method Not Allowed")
 
 # Sub Resource: User Account
-@router.get("/{userId}/account")
+@router.get("/{userId}/account", response_model=UserAccountPublic)
 async def get_user_account(userId: str):
     raise {"message": "TODO: Get user account"}
 
