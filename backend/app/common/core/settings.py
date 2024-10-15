@@ -30,5 +30,6 @@ class Settings(BaseSettings):
     ROOT_PATH_V1: str
     ENVIRONMENT: Literal["local", "staging", "production"]
     PROJECT_NAME: str
+    X_SECRET_TOKEN: str
 
 settings = Settings()

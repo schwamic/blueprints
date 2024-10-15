@@ -1,13 +1,16 @@
 from fastapi import (
     APIRouter, 
-    HTTPException
+    HTTPException,
+    Depends
 )
 from app.health.models.health_model import HealthLivePublic
 from app.health.services.health_services import HealthService
+from app.common.dependencies.check_token_header import check_token_header
 
 router = APIRouter(
     prefix="/health",
     tags=["health"],
+    dependencies=[Depends(check_token_header)],
 )
 
 @router.post(":live", response_model=HealthLivePublic)
