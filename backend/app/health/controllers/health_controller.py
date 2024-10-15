@@ -10,23 +10,27 @@ router = APIRouter(
     tags=["health"],
 )
 
-@router.get("/live}", response_model=HealthLivePublic)
-async def get_health_live():
+@router.post(":live", response_model=HealthLivePublic)
+async def check_health_live():
     healthService = HealthService()
     return healthService.isLive()
 
-@router.post("/live")
-async def create_health_live():
+@router.get("/")
+async def get_health():
     raise HTTPException(status_code=405, detail="Method Not Allowed")
 
-@router.patch("/live")
-async def update_health_live(userId: str):
+@router.post("/")
+async def create_health():
     raise HTTPException(status_code=405, detail="Method Not Allowed")
 
-@router.delete("/live")
-async def delete_health_live(userId: str):
+@router.patch("/")
+async def update_health():
     raise HTTPException(status_code=405, detail="Method Not Allowed")
 
-@router.put("/live")
-async def replace_health_live(userId: str):
+@router.delete("/")
+async def delete_health():
+    raise HTTPException(status_code=405, detail="Method Not Allowed")
+
+@router.put("/")
+async def replace_health():
     raise HTTPException(status_code=405, detail="Method Not Allowed")
