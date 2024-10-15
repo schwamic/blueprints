@@ -50,7 +50,7 @@ helm install [...]
 1. VSCode: Reopen `/backend` in container. (Only once: +Connect to blueprints repository, +Install extension in vs-code)
 2. Run `source .venv/bin/activate` (test via `which python`)
 3. Run `uv sync`
-4. Run tests via `uv tool run pytest` or just `pytest app/tests/` ([Docs](https://docs.pytest.org/en/stable/how-to/usage.html))
+4. Run tests via `uv tool run pytest` or just `pytest` ([Docs](https://docs.pytest.org/en/stable/how-to/usage.html))
 5. Run linter via `ruff check app/` ([Docs](https://docs.astral.sh/ruff/linter/))
 
 #### Misc
