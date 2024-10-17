@@ -4,21 +4,24 @@ from app.users.controllers import users_controller
 from app.health.controllers import health_controller
 from app.common.core.settings import settings
 from starlette.middleware.cors import CORSMiddleware
-from app.common.core.database import startup_db_client, shutdown_db_client
+from app.common.clients.mongo_client import MongoClient
+
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Start the database connection
-    await startup_db_client(app)
+    await MongoClient.openConnection(app)
     yield
     # Close the database connection
-    await shutdown_db_client(app)
+    await MongoClient.closeConnection(app)
+
 
 app = FastAPI(
     title=settings.PROJECT_NAME,
     root_path=settings.ROOT_PATH_V1,
     lifespan=lifespan
 )
+
 
 if settings.ENVIRONMENT=='local':
     app.add_middleware(
@@ -28,6 +31,7 @@ if settings.ENVIRONMENT=='local':
         allow_methods=settings.CORS.allow_methods,
         allow_headers=settings.CORS.allow_headers,
     )
+
 
 app.include_router(health_controller.router)
 app.include_router(users_controller.router)
