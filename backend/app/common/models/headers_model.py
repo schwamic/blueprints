@@ -1,5 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 class CommonHeaders(BaseModel):
-    # model_config = {"extra": "forbid"}
-    x_secret_token: str
+    x_secret_token: str | None = Field(default=None)
