@@ -1,19 +1,32 @@
-from sqlmodel import SQLModel, Field
+from beanie import Document, Indexed
+from pydantic import Field, EmailStr, UUID4
+from datetime import datetime
+from typing import Annotated
 from enum import Enum
-# from pydantic import EmailStr: currently not supported by SQLModel
+
 
 class Subscription(str, Enum):
     FREE = "free plan"
     PRO = "pro plan"
 
+
 # User Sub-Resource
-class UserAccountBase(SQLModel):
-    subscription: str = Field(default=Subscription.FREE, max_length=30)
-    subscriptionChangeDate: str | None = Field(default=None, max_length=30, exclude=True)
-    email: str = Field(max_length=30)
+class UserAccount(Document):
+    userId: Annotated[UUID4, Indexed(unique=True)]
+    subscription: Subscription = Field(default=Subscription.FREE, max_length=30)
+    subscriptionChangeDate: datetime | None = Field(default=datetime.now())
+    email: EmailStr = Field(max_length=30)
+    
+    class Settings:
+        keep_nulls = True
+        name = "usersaccounts_collection"
 
-class UserAccount(UserAccountBase, table=True):
-    userId: str = Field(primary_key=True, foreign_key="user.id", ondelete="CASCADE")
-
-class UserAccountPublic(UserAccountBase):
-    userId: str
+    class Config:
+            schema_extra = {
+                "example": {
+                    "userId": "123456789",
+                    "subscription": "free",
+                    "subscriptionChangeDate": "2032-04-23T10:20:30.400+02:30",
+                    "email": "schwamic@mail.me",
+                }
+            }

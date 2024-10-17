@@ -5,12 +5,8 @@ from pydantic_settings import (
     SettingsConfigDict
 )
 
-class Postgres(BaseModel):  
-    user: str
-    password: str
-    db: str
-    port: int
-    server: str
+class Mongo(BaseModel):  
+    connection_string: str
 
 class Cors(BaseModel):
     allow_origins: List[str]
@@ -25,7 +21,8 @@ class Settings(BaseSettings):
         env_prefix='BP_',
         env_nested_delimiter='__'
     )
-    POSTGRES: Postgres
+    
+    MONGO: Mongo
     CORS: Cors
     ROOT_PATH_V1: str
     ENVIRONMENT: Literal["local", "staging", "production"]

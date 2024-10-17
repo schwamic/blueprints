@@ -17,15 +17,16 @@ async def list_users(offset: int = 0, limit: int = Query(default=100, le=100)):
 
 @router.post("/")
 async def create_user():
+    
     return {"message": "TODO: Create user"}
 
 @router.patch("/{userId}")
 async def update_user(userId: str):
-    return {"message": "TODO: Update user"}
+    raise HTTPException(status_code=405, detail="Method Not Allowed")
 
 @router.delete("/{userId}")
 async def delete_user(userId: str):
-    return {"message": "TODO: Delete user"}
+    raise HTTPException(status_code=405, detail="Method Not Allowed")
 
 @router.put("/{userId}")
 async def replace_user(userId: str):
@@ -38,7 +39,7 @@ async def get_user_account(userId: str):
 
 @router.patch("/{userId}/account")
 async def update_user_account(userId: str):
-    raise {"message": "TODO: Update user account"}
+    raise HTTPException(status_code=405, detail="Method Not Allowed")
 
 @router.post("/{userId}/account")
 async def create_user_account():

@@ -1,14 +1,21 @@
-from sqlmodel import SQLModel, Field
-from pydantic import AnyUrl
-import uuid
+from beanie import Document
+from pydantic import Field, AnyUrl
+from uuid import UUID, uuid4
 
-class UserBase(SQLModel):
+class UserBase(Document):
+    id: UUID = Field(default_factory=uuid4)
     nickname: str | None = Field(default=None, max_length=20)
-    avatar: str | None = Field(default=None, max_length=80)
+    avatar: AnyUrl | None = Field(default=None, max_length=80)
+    
+    class Settings:
+        keep_nulls = True
+        name = "users_collection"
 
-class User(UserBase, table=True):
-    id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
-
-class UserPublic(UserBase):
-    id: uuid.UUID
-    avatar: AnyUrl
+    class Config:
+            schema_extra = {
+                "example": {
+                    "id": "123456789",
+                    "nickname": "schwamic",
+                    "avatar": "https://avatar.me/schwamic.jpg",
+                }
+            }

@@ -52,6 +52,7 @@ helm install [...]
 3. Run `uv sync`
 4. Run tests via `uv tool run pytest` or just `pytest` ([Docs](https://docs.pytest.org/en/stable/how-to/usage.html))
 5. Run linter via `ruff check app/` ([Docs](https://docs.astral.sh/ruff/linter/))
+6. TODO alembic
 
 #### Misc
 

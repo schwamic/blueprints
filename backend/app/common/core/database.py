@@ -1,25 +1,13 @@
-from sqlmodel import (
-    Session,
-    create_engine
-)
-from pydantic_core import MultiHostUrl
+from fastapi import FastAPI
+from motor.motor_asyncio import AsyncIOMotorClient
+from beanie import init_beanie
+from app.users.models.users_model import User
+from app.users.models.users_account_model import UserAccount
 from .settings import settings
 
-sqlite_file_name = "database.db"
-sqlite_url = f"sqlite:///{sqlite_file_name}"
+async def startup_db_client(app: FastAPI):
+    app.mongodb_client = AsyncIOMotorClient(settings.MONGO.connection_string)
+    await init_beanie(database=app.mongodb_client.db_name, document_models=[User, UserAccount])
 
-postgres_url = MultiHostUrl.build(
-    scheme="postgresql+psycopg",
-    username=settings.POSTGRES.user,
-    password=settings.POSTGRES.password,
-    host=settings.POSTGRES.server,
-    port=settings.POSTGRES.port,
-    path=settings.POSTGRES.db,
-)
-
-connect_args = {"check_same_thread": False}
-engine = create_engine(postgres_url, echo=True, connect_args=connect_args)
-
-def init_db(session: Session) -> None:
-    # Tables will be created with Alembic
-    pass
+async def shutdown_db_client(app: FastAPI):
+    app.mongodb_client.close()
