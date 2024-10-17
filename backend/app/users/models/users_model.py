@@ -2,7 +2,7 @@ from beanie import Document
 from pydantic import Field, AnyUrl
 from uuid import UUID, uuid4
 
-class UserBase(Document):
+class User(Document):
     id: UUID = Field(default_factory=uuid4)
     nickname: str | None = Field(default=None, max_length=20)
     avatar: AnyUrl | None = Field(default=None, max_length=80)

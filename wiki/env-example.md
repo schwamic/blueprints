@@ -3,7 +3,7 @@ BP_ENVIRONMENT=local
 BP_PROJECT_NAME=BlueprintsAPI
 BP_X_SECRET_TOKEN=<secret-key>
 
-BP_MONGO__CONNECTION_STRING=mongodb+srv://<user>:<password>@blueprintcluster1.kzgd5.mongodb.net/?retryWrites=true&w=majority&appName=BlueprintCluster1
+BP_MONGO__CONNECTION_STRING=mongodb+srv://<user>:<password>@<host>/?retryWrites=true&w=majority&appName=<database>
 
 BP_CORS__ALLOW_ORIGINS='["*"]'
 BP_CORS__ALLOW_CREDENTIALS=True

@@ -1,17 +1,17 @@
 from fastapi import APIRouter, HTTPException, Query
-from app.users.models.users_model import UserPublic
-from app.users.models.users_account_model import UserAccountPublic
+from app.users.models.users_model import User
+from app.users.models.users_account_model import UserAccount
 
 router = APIRouter(
     prefix="/users",
     tags=["users"],
 )
 
-@router.get("/{userId}", response_model=UserPublic)
+@router.get("/{userId}", response_model=User)
 async def get_user(userId: str):
     raise {"message": "TODO: Get user"}
 
-@router.get("/", response_model=list[UserPublic])
+@router.get("/", response_model=list[User])
 async def list_users(offset: int = 0, limit: int = Query(default=100, le=100)):
     raise HTTPException(status_code=405, detail="Method Not Allowed")
 
@@ -33,7 +33,7 @@ async def replace_user(userId: str):
     raise HTTPException(status_code=405, detail="Method Not Allowed")
 
 # Sub Resource: User Account
-@router.get("/{userId}/account", response_model=UserAccountPublic)
+@router.get("/{userId}/account", response_model=UserAccount)
 async def get_user_account(userId: str):
     raise {"message": "TODO: Get user account"}
 
