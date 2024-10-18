@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, Query
-from app.users.models.users_model import User
+from app.users.models.users_model import User, CreateUser
 from app.users.models.users_account_model import UserAccount
 
 router = APIRouter(
@@ -15,10 +15,12 @@ async def get_user(userId: str):
 async def list_users(offset: int = 0, limit: int = Query(default=100, le=100)):
     raise HTTPException(status_code=405, detail="Method Not Allowed")
 
-@router.post("/")
-async def create_user():
-    
-    return {"message": "TODO: Create user"}
+@router.post("/", response_model=User) # WIP --- läuft noch nicht. Wie DocumentModel dynamisch nutzen?
+async def create_user(user: CreateUser):
+    entry = User(user.model_dump())
+    test = await entry.insert()
+    print(test)
+    return user
 
 @router.patch("/{userId}")
 async def update_user(userId: str):

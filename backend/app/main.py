@@ -9,10 +9,8 @@ from app.common.clients.mongo_client import MongoClient
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Start the database connection
-    await MongoClient.openConnection(app)
+    await MongoClient.openConnection(app)    
     yield
-    # Close the database connection
     await MongoClient.closeConnection(app)
 
 
