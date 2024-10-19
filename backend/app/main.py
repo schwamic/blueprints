@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from app.users.controllers import users_controller
-from app.health.controllers import health_controller
+from app.users.controllers.users_controller import router as users_router
+from app.health.controllers.health_controller import router as health_router
 from app.common.core.settings import settings
 from starlette.middleware.cors import CORSMiddleware
 from app.common.clients.mongo_client import MongoClient
@@ -31,5 +31,5 @@ if settings.ENVIRONMENT=='local':
     )
 
 
-app.include_router(health_controller.router)
-app.include_router(users_controller.router)
+app.include_router(users_router)
+app.include_router(health_router)

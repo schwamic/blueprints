@@ -7,6 +7,7 @@ from pydantic_settings import (
 
 class Mongo(BaseModel):  
     connection_string: str
+    database_name: str
 
 class Cors(BaseModel):
     allow_origins: List[str]
