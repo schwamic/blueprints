@@ -21,14 +21,16 @@ from app.users.models.users_model import User, UserCreate
 @pytest.mark.asyncio
 async def test_create_user():
     async with LifespanManager(app):
-        async with AsyncClient(transport=ASGITransport(app=app), base_url="http://localhost:8001") as client:
+        async with AsyncClient(
+            transport=ASGITransport(app=app), base_url="http://localhost:8001"
+        ) as client:
             response = await client.post(
                 "/api/v1/users/",
-                headers={'content-type': 'application/json', "X-Secret-Token": settings.X_SECRET_TOKEN},
-                json={
-                    "nickname":"tester", 
-                    "email":"tester@mail.me"
-                }
+                headers={
+                    "content-type": "application/json",
+                    "X-Secret-Token": settings.X_SECRET_TOKEN,
+                },
+                json={"nickname": "tester", "email": "tester@mail.me"},
             )
     assert response.status_code == 200
 

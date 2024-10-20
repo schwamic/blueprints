@@ -4,9 +4,9 @@ from app.users.models.users_account_model import UserAccount
 
 class UsersService:
     async def get_user(self, userId: str) -> User | None:
-        print('userId', userId)
+        print("userId", userId)
         return await User.get(userId)
-    
+
     async def create_user(self, user_create: UserCreate) -> User:
         user = User(nickname=user_create.nickname)
         await user.insert()

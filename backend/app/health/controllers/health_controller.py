@@ -1,8 +1,4 @@
-from fastapi import (
-    APIRouter, 
-    HTTPException,
-    Depends
-)
+from fastapi import APIRouter, HTTPException, Depends
 from app.health.models.health_model import HealthLivePublic
 from app.health.services.health_services import HealthService
 from app.common.dependencies.check_token_header import check_token_header

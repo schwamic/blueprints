@@ -9,8 +9,13 @@ from app.common.core.settings import settings
 class MongoClient:
     @staticmethod
     async def openConnection(app: FastAPI):
-        app.mongodb_client = AsyncIOMotorClient(settings.MONGO.connection_string, uuidRepresentation="standard")
-        await init_beanie(database=app.mongodb_client[settings.MONGO.database_name], document_models=[User, UserAccount])
+        app.mongodb_client = AsyncIOMotorClient(
+            settings.MONGO.connection_string, uuidRepresentation="standard"
+        )
+        await init_beanie(
+            database=app.mongodb_client[settings.MONGO.database_name],
+            document_models=[User, UserAccount],
+        )
 
     @staticmethod
     async def closeConnection(app: FastAPI):

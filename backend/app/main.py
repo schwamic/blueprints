@@ -9,19 +9,17 @@ from app.common.clients.mongo_client import MongoClient
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    await MongoClient.openConnection(app)    
+    await MongoClient.openConnection(app)
     yield
     await MongoClient.closeConnection(app)
 
 
 app = FastAPI(
-    title=settings.PROJECT_NAME,
-    root_path=settings.ROOT_PATH_V1,
-    lifespan=lifespan
+    title=settings.PROJECT_NAME, root_path=settings.ROOT_PATH_V1, lifespan=lifespan
 )
 
 
-if settings.ENVIRONMENT=='local':
+if settings.ENVIRONMENT == "local":
     app.add_middleware(
         CORSMiddleware,
         allow_origins=settings.CORS.allow_origins,

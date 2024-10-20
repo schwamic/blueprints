@@ -18,14 +18,14 @@ class UserAccount(Document):
     email: EmailStr = Field(max_length=30)
 
     model_config = ConfigDict(
-        json_schema_extra = {
-                "example": {
-                    "userId": "012225b2-54b2-4220-91bf-f6ce2e0faedb",
-                    "subscription": "free plan",
-                    "subscriptionChangeDate": "2032-04-23T10:20:30.400+02:30",
-                    "email": "schwamic@mail.me",
-                }
+        json_schema_extra={
+            "example": {
+                "userId": "012225b2-54b2-4220-91bf-f6ce2e0faedb",
+                "subscription": "free plan",
+                "subscriptionChangeDate": "2032-04-23T10:20:30.400+02:30",
+                "email": "schwamic@mail.me",
             }
+        }
     )
 
     class Settings:
