@@ -16,4 +16,3 @@ ports:
     internalPort: 8000
     externalPort: 80
     expose: true
-
