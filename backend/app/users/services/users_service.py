@@ -1,5 +1,5 @@
-from app.users.models.users_model import User, UserCreate
 from app.users.models.users_account_model import UserAccount
+from app.users.models.users_model import User, UserCreate
 
 
 class UsersService:

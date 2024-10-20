@@ -1,10 +1,10 @@
-from httpx import AsyncClient, ASGITransport
-from asgi_lifespan import LifespanManager
 import pytest
-from app.main import app
-from app.common.core.settings import settings
-from app.users.models.users_model import User, UserCreate
+from asgi_lifespan import LifespanManager
+from httpx import ASGITransport, AsyncClient
 
+from app.common.core.settings import settings
+from app.main import app
+from app.users.models.users_model import User, UserCreate
 
 # def test_get_user() -> None:
 #     user = UserPublic(id="80ed5964-56de-4efc-8160-55a00a9515bf")

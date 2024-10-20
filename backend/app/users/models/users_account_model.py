@@ -1,8 +1,9 @@
-from beanie import Document, Indexed
-from pydantic import Field, EmailStr, UUID4, Strict, ConfigDict
 from datetime import datetime
-from typing import Annotated
 from enum import Enum
+from typing import Annotated
+
+from beanie import Document, Indexed
+from pydantic import UUID4, ConfigDict, EmailStr, Field, Strict
 
 
 class Subscription(str, Enum):

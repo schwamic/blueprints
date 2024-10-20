@@ -1,10 +1,12 @@
-from fastapi import FastAPI
 from contextlib import asynccontextmanager
-from app.users.controllers.users_controller import router as users_router
-from app.health.controllers.health_controller import router as health_router
-from app.common.core.settings import settings
+
+from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
+
 from app.common.clients.mongo_client import MongoClient
+from app.common.core.settings import settings
+from app.health.controllers.health_controller import router as health_router
+from app.users.controllers.users_controller import router as users_router
 
 
 @asynccontextmanager

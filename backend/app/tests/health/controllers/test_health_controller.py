@@ -1,7 +1,8 @@
 from fastapi.testclient import TestClient
-from app.main import app
-from app.health.models.health_model import HealthLiveStatus
+
 from app.common.core.settings import settings
+from app.health.models.health_model import HealthLiveStatus
+from app.main import app
 
 client = TestClient(app)
 
