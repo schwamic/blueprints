@@ -1,9 +1,10 @@
-from fastapi.testclient import TestClient
+from httpx import AsyncClient, ASGITransport
+from asgi_lifespan import LifespanManager
+import pytest
 from app.main import app
 from app.common.core.settings import settings
-from app.users.models.users_model import UserPublic, UserCreate
+from app.users.models.users_model import User, UserCreate
 
-client = TestClient(app)
 
 # def test_get_user() -> None:
 #     user = UserPublic(id="80ed5964-56de-4efc-8160-55a00a9515bf")
@@ -11,20 +12,24 @@ client = TestClient(app)
 #     assert response.status_code == 200
 #     #assert response.json() == user.model_dump()
 
+
 # def test_list_users(client: TestClient) -> None:
 #     response = client.get("/api/v1/users/", headers={"X-Secret-Token": settings.X_SECRET_TOKEN})
 #     assert response.status_code == 405
 
 
-def test_create_user() -> None:
-    response = client.post(
-        "/api/v1/users/",
-        headers={"X-Secret-Token": settings.X_SECRET_TOKEN},
-        json={
-            "nickname":"tester", 
-            "email":"tester@mail.me"
-        }
-    )
+@pytest.mark.asyncio
+async def test_create_user():
+    async with LifespanManager(app):
+        async with AsyncClient(transport=ASGITransport(app=app), base_url="http://localhost:8001") as client:
+            response = await client.post(
+                "/api/v1/users/",
+                headers={'content-type': 'application/json', "X-Secret-Token": settings.X_SECRET_TOKEN},
+                json={
+                    "nickname":"tester", 
+                    "email":"tester@mail.me"
+                }
+            )
     assert response.status_code == 200
 
 

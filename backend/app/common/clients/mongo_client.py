@@ -6,6 +6,9 @@ from app.users.models.users_account_model import UserAccount
 from app.common.core.settings import settings
 
 
+# TODO
+# if env == 'test': prefix db_name ist "test_"
+
 class MongoClient:
     @staticmethod
     async def openConnection(app: FastAPI):
