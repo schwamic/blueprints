@@ -18,7 +18,7 @@ class MongoClient:
             document_models=[User, UserAccount],
         )
 
-        # Init Test User
+        # Create Test-User
         user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
         test_user = await User.get(user_id)
         if test_user is None:
