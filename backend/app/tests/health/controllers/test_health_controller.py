@@ -22,7 +22,7 @@ async def test_get_health(async_client, auth_header):
 @pytest.mark.asyncio
 async def test_create_health(async_client, auth_header):
     # Act
-    response = await async_client.post("/api/v1/health/", headers=auth_header)
+    response = await async_client.post("/api/v1/health/", headers=auth_header, json={})
     # Assert
     assert response.status_code == 405
 
@@ -30,7 +30,7 @@ async def test_create_health(async_client, auth_header):
 @pytest.mark.asyncio
 async def test_update_health(async_client, auth_header):
     # Act
-    response = await async_client.patch("/api/v1/health/", headers=auth_header)
+    response = await async_client.patch("/api/v1/health/", headers=auth_header, json={})
     # Assert
     assert response.status_code == 405
 
@@ -46,6 +46,6 @@ async def test_delete_health(async_client, auth_header):
 @pytest.mark.asyncio
 async def test_replace_health(async_client, auth_header):
     # Act
-    response = await async_client.put("/api/v1/health/", headers=auth_header)
+    response = await async_client.put("/api/v1/health/", headers=auth_header, json={})
     # Assert
     assert response.status_code == 405

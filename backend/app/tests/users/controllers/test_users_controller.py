@@ -18,7 +18,7 @@ async def test_create_user(async_client, auth_header) -> None:
     response = await async_client.post(
         "/api/v1/users/",
         headers=auth_header,
-        json={"nickname": "tester", "email": "tester@mail.me"},
+        json={"nickname": "batman", "email": "batman@mail.me"},
     )
     # Assert
     assert response.status_code == 200
@@ -55,7 +55,7 @@ async def test_get_user_account(async_client, auth_header, test_user_id) -> None
 async def test_create_user_account(async_client, auth_header, test_user_id) -> None:
     # Act
     response = await async_client.post(
-        f"/api/v1/users/{test_user_id}/account/", headers=auth_header
+        f"/api/v1/users/{test_user_id}/account/", headers=auth_header, json={}
     )
     # Assert
     assert response.status_code == 403
@@ -75,7 +75,7 @@ async def test_delete_user_account(async_client, auth_header, test_user_id) -> N
 async def test_replace_user_account(async_client, auth_header, test_user_id) -> None:
     # Act
     response = await async_client.put(
-        f"/api/v1/users/{test_user_id}/account/", headers=auth_header
+        f"/api/v1/users/{test_user_id}/account/", headers=auth_header, json={}
     )
     # Assert
     assert response.status_code == 403
@@ -108,7 +108,7 @@ async def test_delete_user(async_client, auth_header, test_user_id) -> None:
 async def test_replace_user(async_client, auth_header, test_user_id) -> None:
     # Act
     response = await async_client.put(
-        f"/api/v1/users/{test_user_id}", headers=auth_header
+        f"/api/v1/users/{test_user_id}", headers=auth_header, json={}
     )
     # Assert
     assert response.status_code == 405
@@ -118,7 +118,7 @@ async def test_replace_user(async_client, auth_header, test_user_id) -> None:
 async def test_update_user_account(async_client, auth_header, test_user_id) -> None:
     # Act
     response = await async_client.patch(
-        f"/api/v1/users/{test_user_id}/account/", headers=auth_header
+        f"/api/v1/users/{test_user_id}/account/", headers=auth_header, json={}
     )
     # Assert
     assert response.status_code == 405

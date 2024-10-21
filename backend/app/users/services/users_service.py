@@ -14,6 +14,13 @@ class UsersService:
         return user
 
     async def create_user(self, user_create: UserCreate) -> User:
+        user_account = await UserAccount.find_one(
+            UserAccount.email == user_create.email
+        )
+        if user_account is not None:
+            raise HTTPException(
+                status_code=400, detail="User with this email already exists"
+            )
         user = User(nickname=user_create.nickname)
         await user.insert()
         user_account = UserAccount(userId=user.id, email=user_create.email)

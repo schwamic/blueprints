@@ -16,7 +16,7 @@ class UserAccount(Document):
     userId: Annotated[UUID4, Indexed(unique=True), Strict(False)]
     subscription: Subscription = Field(default=Subscription.FREE, max_length=30)
     subscriptionChangeDate: datetime = Field(default=datetime.now())
-    email: EmailStr = Field(max_length=30)
+    email: Annotated[EmailStr, Indexed(unique=True)] = Field(max_length=30)
 
     model_config = ConfigDict(
         json_schema_extra={
