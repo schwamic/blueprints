@@ -25,6 +25,7 @@ class Settings(BaseSettings):
     )
 
     MONGO: Mongo
+    OPENAI_API_KEY: str
     CORS: Cors
     ROOT_PATH_V1: str
     ENVIRONMENT: Literal["local", "staging", "production"]
