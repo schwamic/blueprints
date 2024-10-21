@@ -1,25 +1,33 @@
 import pytest
 from asgi_lifespan import LifespanManager
 from httpx import ASGITransport, AsyncClient
+import pytest_asyncio
 
 from app.common.core.settings import settings
 from app.main import app
 
 
-@pytest.mark.asyncio
-async def test_get_user():
+@pytest_asyncio.fixture
+async def client():
     async with LifespanManager(app):
         async with AsyncClient(
             transport=ASGITransport(app=app), base_url="http://localhost:8001"
-        ) as client:
-            test_user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
-            response = await client.get(
-                f"/api/v1/users/{test_user_id}",
-                headers={
-                    "content-type": "application/json",
-                    "X-Secret-Token": settings.X_SECRET_TOKEN,
-                },
-            )
+        ) as ac:
+            yield ac
+
+
+@pytest.mark.asyncio
+async def test_get_user(client) -> None:
+    # Act
+    test_user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
+    response = await client.get(
+        f"/api/v1/users/{test_user_id}",
+        headers={
+            "content-type": "application/json",
+            "X-Secret-Token": settings.X_SECRET_TOKEN,
+        },
+    )
+    # Assert
     assert response.status_code == 200
 
 
@@ -29,37 +37,33 @@ async def test_get_user():
 
 
 @pytest.mark.asyncio
-async def test_create_user():
-    async with LifespanManager(app):
-        async with AsyncClient(
-            transport=ASGITransport(app=app), base_url="http://localhost:8001"
-        ) as client:
-            response = await client.post(
-                "/api/v1/users/",
-                headers={
-                    "content-type": "application/json",
-                    "X-Secret-Token": settings.X_SECRET_TOKEN,
-                },
-                json={"nickname": "tester", "email": "tester@mail.me"},
-            )
+async def test_create_user(client) -> None:
+    # Act
+    response = await client.post(
+        "/api/v1/users/",
+        headers={
+            "content-type": "application/json",
+            "X-Secret-Token": settings.X_SECRET_TOKEN,
+        },
+        json={"nickname": "tester", "email": "tester@mail.me"},
+    )
+    # Assert
     assert response.status_code == 200
 
 
 @pytest.mark.asyncio
-async def test_update_user():
-    async with LifespanManager(app):
-        async with AsyncClient(
-            transport=ASGITransport(app=app), base_url="http://localhost:8001"
-        ) as client:
-            user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
-            response = await client.patch(
-                f"/api/v1/users/{user_id}",
-                headers={
-                    "content-type": "application/json",
-                    "X-Secret-Token": settings.X_SECRET_TOKEN,
-                },
-                json={"avatar": "https://avatar.me/svg?seed=batman"},
-            )
+async def test_update_user(client) -> None:
+    # Act
+    user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
+    response = await client.patch(
+        f"/api/v1/users/{user_id}",
+        headers={
+            "content-type": "application/json",
+            "X-Secret-Token": settings.X_SECRET_TOKEN,
+        },
+        json={"avatar": "https://avatar.me/svg?seed=batman"},
+    )
+    # Assert
     assert response.status_code == 200
 
 
