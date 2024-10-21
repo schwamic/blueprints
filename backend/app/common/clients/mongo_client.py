@@ -18,6 +18,17 @@ class MongoClient:
             document_models=[User, UserAccount],
         )
 
+        # Init test user
+        user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
+        test_user = await User.get(user_id)
+        if test_user is None:
+            test_user = User(
+                id=user_id,
+                nickname="tester",
+                avatar=None,
+            )
+            await test_user.insert()
+
     @staticmethod
     async def closeConnection(app: FastAPI):
         app.mongodb_client.close()

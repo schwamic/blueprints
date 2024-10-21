@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from beanie import Document, Indexed
 from pydantic import UUID4, AnyUrl, BaseModel, ConfigDict, EmailStr, Field, Strict
+from pydantic_partial import create_partial_model
 
 
 class TestUser(Document):
@@ -13,12 +14,17 @@ class TestUser(Document):
         name = "testusers_collection"
 
 
-class User(Document):
-    id: Annotated[UUID4, Indexed(), Strict(False)] = Field(
-        default_factory=uuid4, alias="_id"
-    )
+class UserBase(BaseModel):
     nickname: str = Field(max_length=20)
     avatar: AnyUrl | None = Field(default=None, max_length=80)
+
+
+class User(Document, UserBase):
+    id: Annotated[UUID4, Indexed(), Strict(False)] = Field(
+        default_factory=uuid4, alias="_id", serialization_alias="id"
+    )
+    # nickname: str = Field(max_length=20)
+    # avatar: AnyUrl | None = Field(default=None, max_length=80)
 
     model_config = ConfigDict(
         json_schema_extra={
@@ -35,10 +41,8 @@ class User(Document):
         name = "users_collection"
 
 
-class UserBase(BaseModel):
-    nickname: str = Field(max_length=20)
-    avatar: AnyUrl | None = Field(default=None, max_length=80)
-
-
 class UserCreate(UserBase):
     email: EmailStr = Field(max_length=30)
+
+
+UserUpdate = create_partial_model(UserBase)

@@ -4,13 +4,23 @@ from httpx import ASGITransport, AsyncClient
 
 from app.common.core.settings import settings
 from app.main import app
-from app.users.models.users_model import User, UserCreate
 
-# def test_get_user() -> None:
-#     user = UserPublic(id="80ed5964-56de-4efc-8160-55a00a9515bf")
-#     response = client.get(f"/api/v1/users/{user.id}", headers={"X-Secret-Token": settings.X_SECRET_TOKEN})
-#     assert response.status_code == 200
-#     #assert response.json() == user.model_dump()
+
+@pytest.mark.asyncio
+async def test_get_user():
+    async with LifespanManager(app):
+        async with AsyncClient(
+            transport=ASGITransport(app=app), base_url="http://localhost:8001"
+        ) as client:
+            test_user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
+            response = await client.get(
+                f"/api/v1/users/{test_user_id}",
+                headers={
+                    "content-type": "application/json",
+                    "X-Secret-Token": settings.X_SECRET_TOKEN,
+                },
+            )
+    assert response.status_code == 200
 
 
 # def test_list_users(client: TestClient) -> None:
@@ -35,9 +45,22 @@ async def test_create_user():
     assert response.status_code == 200
 
 
-# def test_update_user(client: TestClient) -> None:
-#     response = client.push("/api/v1/users/{userId}", headers={"X-Secret-Token": settings.X_SECRET_TOKEN})
-#     assert response.status_code == 405
+@pytest.mark.asyncio
+async def test_update_user():
+    async with LifespanManager(app):
+        async with AsyncClient(
+            transport=ASGITransport(app=app), base_url="http://localhost:8001"
+        ) as client:
+            user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
+            response = await client.patch(
+                f"/api/v1/users/{user_id}",
+                headers={
+                    "content-type": "application/json",
+                    "X-Secret-Token": settings.X_SECRET_TOKEN,
+                },
+                json={"avatar": "https://avatar.me/svg?seed=batman"},
+            )
+    assert response.status_code == 200
 
 
 # def test_delete_user(client: TestClient) -> None:
