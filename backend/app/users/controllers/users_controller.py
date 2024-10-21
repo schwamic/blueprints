@@ -46,26 +46,26 @@ async def replace_user(user_id: str):
 
 
 # Sub Resource: User Account
-@router.get("/{user_id}/account", response_model=UserAccount)
+@router.get("/{user_id}/account/", response_model=UserAccount)
 async def get_user_account(user_id: str):
     raise {"message": "TODO: Get user account"}
 
 
-@router.patch("/{user_id}/account")
-async def update_user_account(user_id: str):
+@router.patch("/{user_id}/account/")
+async def update_user_account():
     raise HTTPException(status_code=405, detail="Method Not Allowed")
 
 
-@router.post("/{user_id}/account")
+@router.post("/{user_id}/account/")
 async def create_user_account():
     raise HTTPException(status_code=403, detail="Forbidden")
 
 
-@router.delete("/{user_id}/account")
+@router.delete("/{user_id}/account/")
 async def delete_user_account():
     raise HTTPException(status_code=403, detail="Forbidden")
 
 
-@router.put("/{user_id}/account")
+@router.put("/{user_id}/account/")
 async def replace_user_account():
     raise HTTPException(status_code=403, detail="Forbidden")

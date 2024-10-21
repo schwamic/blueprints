@@ -3,6 +3,7 @@ import pytest_asyncio
 from asgi_lifespan import LifespanManager
 from httpx import ASGITransport, AsyncClient
 
+from app.common.core.settings import settings
 from app.main import app
 
 
@@ -14,6 +15,14 @@ def test_user_id():
 @pytest.fixture
 def base_url():
     return "http://localhost:8001"
+
+
+@pytest.fixture
+def auth_header():
+    return {
+        "content-type": "application/json",
+        "X-Secret-Token": settings.X_SECRET_TOKEN,
+    }
 
 
 @pytest_asyncio.fixture
