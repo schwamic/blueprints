@@ -1,14 +1,15 @@
-from fastapi import APIRouter, HTTPException, Query
+from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import UUID4
 
+from app.common.dependencies.check_token_header import check_token_header
 from app.users.models.users_account_model import UserAccount
 from app.users.models.users_model import User, UserCreate, UserUpdate
 from app.users.services.users_service import users_service
 
-
 router = APIRouter(
     prefix="/users",
     tags=["users"],
+    dependencies=[Depends(check_token_header)],
 )
 
 
