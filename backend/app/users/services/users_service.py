@@ -1,3 +1,5 @@
+from uuid import UUID
+
 from fastapi import HTTPException
 
 from app.users.models.users_account_model import UserAccount
@@ -25,6 +27,12 @@ class UsersService:
         update_data = user.model_dump(exclude_unset=True)
         updated_user = await current_user.set(update_data)
         return updated_user
+
+    async def get_user_account(self, user_id: str) -> UserAccount:
+        user_account = await UserAccount.find_one(UserAccount.userId == UUID(user_id))
+        if user_account is None:
+            raise HTTPException(status_code=404, detail="User not found")
+        return user_account
 
 
 users_service = UsersService()

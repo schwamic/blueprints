@@ -48,7 +48,8 @@ async def replace_user(user_id: str):
 # Sub Resource: User Account
 @router.get("/{user_id}/account/", response_model=UserAccount)
 async def get_user_account(user_id: str):
-    raise {"message": "TODO: Get user account"}
+    user_account = await users_service.get_user_account(user_id)
+    return user_account
 
 
 @router.patch("/{user_id}/account/")

@@ -18,7 +18,7 @@ class MongoClient:
             document_models=[User, UserAccount],
         )
 
-        # Init test user
+        # Init Test User
         user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
         test_user = await User.get(user_id)
         if test_user is None:
@@ -27,7 +27,9 @@ class MongoClient:
                 nickname="tester",
                 avatar=None,
             )
+            test_user_account = UserAccount(userId=user_id, email="tester@mail.me")
             await test_user.insert()
+            await test_user_account.insert()
 
     @staticmethod
     async def closeConnection(app: FastAPI):

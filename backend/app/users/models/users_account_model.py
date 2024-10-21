@@ -15,7 +15,7 @@ class Subscription(str, Enum):
 class UserAccount(Document):
     userId: Annotated[UUID4, Indexed(unique=True), Strict(False)]
     subscription: Subscription = Field(default=Subscription.FREE, max_length=30)
-    subscriptionChangeDate: datetime | None = Field(default=datetime.now())
+    subscriptionChangeDate: datetime = Field(default=datetime.now())
     email: EmailStr = Field(max_length=30)
 
     model_config = ConfigDict(

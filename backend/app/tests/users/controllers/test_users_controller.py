@@ -39,7 +39,7 @@ async def test_update_user(async_client, test_user_id, auth_header) -> None:
 @pytest.mark.asyncio
 async def test_get_user_account(async_client, auth_header, test_user_id) -> None:
     # Act
-    response = await async_client.patch(
+    response = await async_client.get(
         f"/api/v1/users/{test_user_id}/account/", headers=auth_header
     )
     # Assert
