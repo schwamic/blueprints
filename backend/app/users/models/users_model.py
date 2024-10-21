@@ -23,8 +23,6 @@ class User(Document, UserBase):
     id: Annotated[UUID4, Indexed(), Strict(False)] = Field(
         default_factory=uuid4, alias="_id", serialization_alias="id"
     )
-    # nickname: str = Field(max_length=20)
-    # avatar: AnyUrl | None = Field(default=None, max_length=80)
 
     model_config = ConfigDict(
         json_schema_extra={
