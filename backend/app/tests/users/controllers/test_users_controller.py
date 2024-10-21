@@ -1,26 +1,13 @@
 import pytest
-from asgi_lifespan import LifespanManager
-from httpx import ASGITransport, AsyncClient
-import pytest_asyncio
 
 from app.common.core.settings import settings
-from app.main import app
-
-
-@pytest_asyncio.fixture
-async def client():
-    async with LifespanManager(app):
-        async with AsyncClient(
-            transport=ASGITransport(app=app), base_url="http://localhost:8001"
-        ) as ac:
-            yield ac
 
 
 @pytest.mark.asyncio
-async def test_get_user(client) -> None:
+async def test_get_user(async_client) -> None:
     # Act
     test_user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
-    response = await client.get(
+    response = await async_client.get(
         f"/api/v1/users/{test_user_id}",
         headers={
             "content-type": "application/json",
@@ -37,9 +24,9 @@ async def test_get_user(client) -> None:
 
 
 @pytest.mark.asyncio
-async def test_create_user(client) -> None:
+async def test_create_user(async_client) -> None:
     # Act
-    response = await client.post(
+    response = await async_client.post(
         "/api/v1/users/",
         headers={
             "content-type": "application/json",
@@ -52,10 +39,10 @@ async def test_create_user(client) -> None:
 
 
 @pytest.mark.asyncio
-async def test_update_user(client) -> None:
+async def test_update_user(async_client) -> None:
     # Act
     user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
-    response = await client.patch(
+    response = await async_client.patch(
         f"/api/v1/users/{user_id}",
         headers={
             "content-type": "application/json",
