@@ -4,9 +4,8 @@ from app.common.core.settings import settings
 
 
 @pytest.mark.asyncio
-async def test_get_user(async_client) -> None:
+async def test_get_user(async_client, test_user_id) -> None:
     # Act
-    test_user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
     response = await async_client.get(
         f"/api/v1/users/{test_user_id}",
         headers={
@@ -39,11 +38,10 @@ async def test_create_user(async_client) -> None:
 
 
 @pytest.mark.asyncio
-async def test_update_user(async_client) -> None:
+async def test_update_user(async_client, test_user_id) -> None:
     # Act
-    user_id = "012225b2-54b2-4220-91bf-f6ce2e0faedb"
     response = await async_client.patch(
-        f"/api/v1/users/{user_id}",
+        f"/api/v1/users/{test_user_id}",
         headers={
             "content-type": "application/json",
             "X-Secret-Token": settings.X_SECRET_TOKEN,
