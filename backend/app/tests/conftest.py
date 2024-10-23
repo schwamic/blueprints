@@ -7,6 +7,12 @@ from app.common.core.settings import settings
 from app.main import app
 
 
+# TODO: update key
+@pytest.fixture
+def test_template_id():
+    return "012225b2-54b2-4220-91bf-f6ce2e0faedb"
+
+
 @pytest.fixture
 def test_user_id():
     return "012225b2-54b2-4220-91bf-f6ce2e0faedb"

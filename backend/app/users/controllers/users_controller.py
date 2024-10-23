@@ -6,6 +6,7 @@ from app.users.models.users_account_model import UserAccount
 from app.users.models.users_model import User, UserCreate, UserUpdate
 from app.users.services.users_service import users_service
 
+
 router = APIRouter(
     prefix="/users",
     tags=["users"],

@@ -6,14 +6,6 @@ from pydantic import UUID4, AnyUrl, BaseModel, ConfigDict, EmailStr, Field, Stri
 from pydantic_partial import create_partial_model
 
 
-class TestUser(Document):
-    test: str
-
-    class Settings:
-        keep_nulls = True
-        name = "testusers_collection"
-
-
 class UserBase(BaseModel):
     nickname: str = Field(max_length=20)
     avatar: AnyUrl | None = Field(default=None, max_length=80)

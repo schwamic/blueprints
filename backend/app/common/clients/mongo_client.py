@@ -5,6 +5,7 @@ from motor.motor_asyncio import AsyncIOMotorClient
 from app.common.core.settings import settings
 from app.users.models.users_account_model import UserAccount
 from app.users.models.users_model import User
+from app.templates.models.templates_model import Template
 
 
 class MongoClient:
@@ -15,7 +16,7 @@ class MongoClient:
         )
         await init_beanie(
             database=app.mongodb_client[settings.MONGO.database_name],
-            document_models=[User, UserAccount],
+            document_models=[User, UserAccount, Template],
         )
 
         # Create Test-User

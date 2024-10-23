@@ -7,6 +7,7 @@ from app.common.clients.mongo_client import MongoClient
 from app.common.core.settings import settings
 from app.health.controllers.health_controller import router as health_router
 from app.users.controllers.users_controller import router as users_router
+from app.templates.controllers.templates_controller import router as templates_router
 
 
 @asynccontextmanager
@@ -32,4 +33,5 @@ if settings.ENVIRONMENT == "local":
 
 
 app.include_router(users_router)
+app.include_router(templates_router)
 app.include_router(health_router)

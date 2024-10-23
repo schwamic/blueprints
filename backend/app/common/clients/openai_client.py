@@ -1,44 +1,56 @@
-from langchain_openai import ChatOpenAI
+import json
+
 from langchain.schema.messages import AIMessage, HumanMessage
+from langchain_openai import ChatOpenAI
+
 from app.common.core.settings import settings
-from enum import Enum
+from app.common.models.aimodels_model import AssistantType, AIModel
+from app.templates.services.templates_service import AIClient, AIChat
 
 
-class Assistant(str, Enum):
-    QUESTIONER = "questioner"
-    INSTRUCTOR = "instructor"
+INSTRUCTIONS_JSON_FILE_PATH = "../core/ai_instructions.json"
+TOP_P = 0
+SEED = 42
+TEMPERATURE = 0
+MODEL = "gpt-4o"
 
 
-class OpenAIClient:
+class OpenAIClient(AIClient):
     def __init__(self):
-        self.chat = None
-        self.instructions = {
-            "questioner": "Ask 5 to 15 questions.",
-            "instructor": "Provide 5 to 15 instructions.",
-        }
+        with open(INSTRUCTIONS_JSON_FILE_PATH, "r") as file:
+            self.instructions = json.load(file)
 
-    def create_chat(self, assistant: Assistant):
-        if assistant == Assistant.QUESTIONER:
-            return Chat(self.instructions.questioner)
-        elif assistant == Assistant.INSTRUCTOR:
-            return Chat(self.instructions.instructor)
-        else:
-            raise ValueError("Invalid chat type")
+    def create_chat(self, assistant_type: AssistantType) -> AIChat:
+        ai_model = AIModel(
+            assistant_type=assistant_type,
+            name=MODEL,
+            seed=SEED,
+            temperature=TEMPERATURE,
+            top_p=TOP_P,
+        )
+        return GPTChat(ai_model, self.instructions[assistant_type])
 
 
-class Chat:
-    def __init__(self, instructions: str):
+# refactor:
+# https://platform.openai.com/docs/guides/structured-outputs/introduction
+class GPTChat(AIChat):
+    def __init__(self, model: AIModel, instructions: str):
+        self.model = model
         self.ai_message = AIMessage(content=[{"type": "text", "text": instructions}])
         self.chat = ChatOpenAI(
             openai_api_key=settings.OPENAI_API_KEY,
-            model_name="gpt-4o",
-            model_kwargs={"top_p": 0, "seed": 42},
-            temperature=0,
+            model_name=self.model.name,
+            model_kwargs={"top_p": self.model.top_p, "seed": self.model.seed},
+            temperature=self.model.temperature,
         )
 
     def send(self, prompt: str):
-        response = self.client.invoke([self.ai_message, HumanMessage(content=prompt)])
+        response = self.chat.invoke([self.ai_message, HumanMessage(content=prompt)])
         return response.content
+
+    @property
+    def model(self):
+        return self.model
 
 
 openai_client = OpenAIClient()
